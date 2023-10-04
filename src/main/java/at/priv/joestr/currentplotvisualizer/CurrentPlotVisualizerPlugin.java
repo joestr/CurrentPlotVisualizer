@@ -7,24 +7,32 @@
 // work. If not, see <https://creativecommons.org/licenses/by-sa/4.0/>.
 package at.priv.joestr.currentplotvisualizer;
 
+import at.priv.joestr.currentplotvisualizer.listeners.PlayerJoinListener;
 import at.priv.joestr.currentplotvisualizer.listeners.PlotChangeListener;
 import com.plotsquared.core.PlotAPI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.boss.BossBar;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  *
  * @author joestr
  */
-public class CurrentPlotVisualizer extends JavaPlugin {
+public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
-  public static CurrentPlotVisualizer instance;
+  public static CurrentPlotVisualizerPlugin instance;
 
   private PlotAPI plotApi;
 
+  private Map<UUID, BossBar> playerBossBars = new HashMap<>();
+
   @Override
   public void onEnable() {
+    super.onEnable();
+
     instance = this;
 
     this.loadExternalPluginIntegrations();
@@ -33,26 +41,33 @@ public class CurrentPlotVisualizer extends JavaPlugin {
       this.registerPlotsquaredEventListeners(instance);
     }
 
-    super.onEnable(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    this.registerEventListeners(instance);
   }
 
-  public void loadExternalPluginIntegrations() {
+  private void loadExternalPluginIntegrations() {
     this.loadPlotSquaredPluginIntegration();
   }
 
-  public void loadPlotSquaredPluginIntegration() {
+  private void loadPlotSquaredPluginIntegration() {
     if (Bukkit.getPluginManager().getPlugin("PlotSquared") != null) {
       this.plotApi = new PlotAPI();
     }
   }
 
-  public void registerPlotsquaredEventListeners(CurrentPlotVisualizer plugin) {
+  private void registerPlotsquaredEventListeners(CurrentPlotVisualizerPlugin plugin) {
     this.plotApi.registerListener(new PlotChangeListener(plugin));
+  }
+
+  private void registerEventListeners(CurrentPlotVisualizerPlugin instance) {
+    this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(instance), instance);
   }
 
   @Override
   public void onDisable() {
-    super.onDisable(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    super.onDisable();
   }
 
+  public Map<UUID, BossBar> getPlayerBossBars() {
+    return playerBossBars;
+  }
 }

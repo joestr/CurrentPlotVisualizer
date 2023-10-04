@@ -7,10 +7,11 @@
 // work. If not, see <https://creativecommons.org/licenses/by-sa/4.0/>.
 package at.priv.joestr.currentplotvisualizer.listeners;
 
-import at.priv.joestr.currentplotvisualizer.CurrentPlotVisualizer;
+import at.priv.joestr.currentplotvisualizer.CurrentPlotVisualizerPlugin;
 import com.google.common.eventbus.Subscribe;
 import com.plotsquared.core.events.PlayerEnterPlotEvent;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BossBar;
 
 /**
  *
@@ -18,14 +19,18 @@ import org.bukkit.plugin.Plugin;
  */
 public class PlotChangeListener {
 
-  private CurrentPlotVisualizer plugin;
+  private CurrentPlotVisualizerPlugin plugin;
 
-  public PlotChangeListener(CurrentPlotVisualizer plugin) {
+  public PlotChangeListener(CurrentPlotVisualizerPlugin plugin) {
     this.plugin = plugin;
   }
 
   @Subscribe
   public void on(PlayerEnterPlotEvent e) {
-
+    if (plugin.getPlayerBossBars().containsKey(e.getPlotPlayer().getUUID())) {
+      BossBar b = plugin.getPlayerBossBars().get(e.getPlotPlayer().getUUID());
+      b.setColor(BarColor.GREEN);
+      b.setTitle(e.getPlot().getAlias());
+    }
   }
 }
