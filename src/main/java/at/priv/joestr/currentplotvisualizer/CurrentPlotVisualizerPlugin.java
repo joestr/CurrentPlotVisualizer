@@ -9,6 +9,7 @@ package at.priv.joestr.currentplotvisualizer;
 
 import at.priv.joestr.currentplotvisualizer.listeners.PlayerJoinListener;
 import at.priv.joestr.currentplotvisualizer.listeners.PlotChangeListener;
+import com.google.common.collect.HashBiMap;
 import com.plotsquared.core.PlotAPI;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +27,7 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
   public static CurrentPlotVisualizerPlugin instance;
 
   private PlotAPI plotApi;
-
-  private Map<UUID, BossBar> playerBossBars = new HashMap<>();
+  private final Map<UUID, BossBar> playerBossBars = new HashMap<>();
 
   @Override
   public void onEnable() {
@@ -42,6 +42,19 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
     }
 
     this.registerEventListeners(instance);
+  }
+
+  @Override
+  public void onDisable() {
+    super.onDisable();
+  }
+
+  public PlotAPI getPlotApi() {
+    return plotApi;
+  }
+
+  public Map<UUID, BossBar> getPlayerBossBars() {
+    return playerBossBars;
   }
 
   private void loadExternalPluginIntegrations() {
@@ -60,14 +73,5 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
   private void registerEventListeners(CurrentPlotVisualizerPlugin instance) {
     this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(instance), instance);
-  }
-
-  @Override
-  public void onDisable() {
-    super.onDisable();
-  }
-
-  public Map<UUID, BossBar> getPlayerBossBars() {
-    return playerBossBars;
   }
 }
