@@ -1,16 +1,16 @@
 main: '${project.groupId}.${project.artifactId}.CurrentPlotVisualizerPlugin'
 name: '${project.name}'
 version: '${project.version}'
-api-version: '1.19'
+api-version: '1.20'
 description: 'Visualizes the current Plot.'
 author: 'joestr'
 website: 'https://github.com/joestr/CurrentPlotVisualizer/'
 database: false
-softdepend: [PlotSquared]
+depend: [PlotSquared]
 folia-supported: false
 commands:
   currentplotvisualizer:
-    description: Shows the help for the PostBox plugin.
+    description: Shows the help for the CurrentPlotVisualizer plugin.
     permission: currentplotvisualizer.commands.cpv
     permission-message: '§cYou are lacking permission §fcurrentplotvisualizer.commands.cpv§c!'
     usage: '§cSyntax error! Use: §f/<command>'

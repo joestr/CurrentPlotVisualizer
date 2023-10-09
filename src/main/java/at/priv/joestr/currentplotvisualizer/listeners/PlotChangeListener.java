@@ -31,7 +31,6 @@ public class PlotChangeListener {
   public void on(PlayerEnterPlotEvent e) {
     if (plugin.getPlayerBossBars().containsKey(e.getPlotPlayer().getUUID())) {
       BossBar b = plugin.getPlayerBossBars().get(e.getPlotPlayer().getUUID());
-      b.setColor(BarColor.GREEN);
       String playerName = Bukkit.getOfflinePlayer(e.getPlot().getOwner()).getName();
       b.setTitle(playerName);
     }
@@ -41,7 +40,6 @@ public class PlotChangeListener {
   public void on(PlayerLeavePlotEvent e) {
     if (plugin.getPlayerBossBars().containsKey(e.getPlotPlayer().getUUID())) {
       BossBar b = plugin.getPlayerBossBars().get(e.getPlotPlayer().getUUID());
-      b.setColor(BarColor.GREEN);
       b.setTitle("Hier ist kein Plot");
     }
   }

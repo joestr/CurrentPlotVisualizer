@@ -8,7 +8,10 @@
 package at.priv.joestr.currentplotvisualizer.listeners;
 
 import at.priv.joestr.currentplotvisualizer.CurrentPlotVisualizerPlugin;
+import com.plotsquared.core.plot.Plot;
+import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -30,10 +33,20 @@ public class PlayerJoinListener implements Listener {
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent e) {
-    if (!plugin.getPlayerBossBars().containsKey(e.getPlayer().getUniqueId())) {
-      BossBar b = Bukkit.createBossBar("", BarColor.BLUE, BarStyle.SOLID);
+    UUID playerUuid = e.getPlayer().getUniqueId();
+
+    if (!plugin.getPlayerBossBars().containsKey(playerUuid)) {
+      BossBar b = Bukkit.createBossBar("Hier ist kein Plot", BarColor.GREEN, BarStyle.SOLID);
       b.addPlayer(e.getPlayer());
-      plugin.getPlayerBossBars().put(e.getPlayer().getUniqueId(), b);
+      plugin.getPlayerBossBars().put(playerUuid, b);
+    }
+    Plot plot = plugin.getPlotApi()
+      .wrapPlayer(playerUuid)
+      .getLocation()
+      .getPlot();
+    if (plot != null) {
+      OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(plot.getOwner());
+      plugin.getPlayerBossBars().get(playerUuid).setTitle(offlinePlayer.getName());
     }
   }
 }

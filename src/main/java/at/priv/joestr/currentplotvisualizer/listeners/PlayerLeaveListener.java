@@ -8,9 +8,10 @@
 package at.priv.joestr.currentplotvisualizer.listeners;
 
 import at.priv.joestr.currentplotvisualizer.CurrentPlotVisualizerPlugin;
+import java.util.UUID;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  *
@@ -25,9 +26,10 @@ public class PlayerLeaveListener implements Listener {
   }
 
   @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent e) {
-    if (plugin.getPlayerBossBars().containsKey(e.getPlayer().getUniqueId())) {
-      plugin.getPlayerBossBars().remove(e.getPlayer().getUniqueId());
+  public void onPlayerJoin(PlayerQuitEvent e) {
+    UUID playerUuid = e.getPlayer().getUniqueId();
+    if (plugin.getPlayerBossBars().containsKey(playerUuid)) {
+      plugin.getPlayerBossBars().remove(playerUuid);
     }
   }
 }
