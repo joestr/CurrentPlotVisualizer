@@ -36,7 +36,7 @@ public class PlayerJoinListener implements Listener {
     UUID playerUuid = e.getPlayer().getUniqueId();
 
     if (!plugin.getPlayerBossBars().containsKey(playerUuid)) {
-      BossBar b = Bukkit.createBossBar("Hier ist kein Plot", BarColor.GREEN, BarStyle.SOLID);
+      BossBar b = Bukkit.createBossBar(plugin.getNamespacedKey(), "Hier ist kein Plot", BarColor.GREEN, BarStyle.SOLID);
       b.addPlayer(e.getPlayer());
       plugin.getPlayerBossBars().put(playerUuid, b);
     }

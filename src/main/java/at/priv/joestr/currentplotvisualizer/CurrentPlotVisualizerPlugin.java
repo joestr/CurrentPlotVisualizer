@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.UUID;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
@@ -25,16 +26,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
   public static CurrentPlotVisualizerPlugin instance;
-
   private PlotAPI plotApi;
   private final Map<UUID, BossBar> playerBossBars = new HashMap<>();
-  private HashMap<String, TabExecutor> commandMap;
+  private NamespacedKey namespacedKey;
 
   @Override
   public void onEnable() {
     super.onEnable();
 
     instance = this;
+    namespacedKey = new NamespacedKey(
+      this,
+      "CurrentPlotVisualizer_cfc3188cb31fe96d5c6ab8b6f1879ecb"
+    );
 
     this.loadExternalPluginIntegrations();
 
@@ -59,6 +63,10 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
   public Map<UUID, BossBar> getPlayerBossBars() {
     return playerBossBars;
+  }
+
+  public NamespacedKey getNamespacedKey() {
+    return namespacedKey;
   }
 
   private void loadExternalPluginIntegrations() {

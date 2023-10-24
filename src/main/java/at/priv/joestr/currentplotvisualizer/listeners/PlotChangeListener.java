@@ -12,7 +12,6 @@ import com.google.common.eventbus.Subscribe;
 import com.plotsquared.core.events.PlayerEnterPlotEvent;
 import com.plotsquared.core.events.PlayerLeavePlotEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
 
 /**
