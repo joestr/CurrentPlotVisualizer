@@ -7,6 +7,7 @@ author: 'joestr'
 website: 'https://github.com/joestr/CurrentPlotVisualizer/'
 database: false
 depend: [PlotSquared]
+softdepend: [CommonSettings]
 folia-supported: false
 commands:
   currentplotvisualizer:

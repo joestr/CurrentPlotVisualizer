@@ -139,8 +139,13 @@
         <version>3.12.0</version>
         <type>jar</type>
       </dependency>
+      <dependency>
+        <groupId>de.cubbossa</groupId>
+        <artifactId>commonsettings-api</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
-    
   <build>
     <resources>
       <resource>

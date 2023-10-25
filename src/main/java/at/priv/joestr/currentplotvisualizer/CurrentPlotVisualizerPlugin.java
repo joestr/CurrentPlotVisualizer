@@ -11,7 +11,9 @@ import at.priv.joestr.currentplotvisualizer.commands.CurrentPlotVisualizerComman
 import at.priv.joestr.currentplotvisualizer.listeners.PlayerJoinListener;
 import at.priv.joestr.currentplotvisualizer.listeners.PlayerLeaveListener;
 import at.priv.joestr.currentplotvisualizer.listeners.PlotChangeListener;
+import at.priv.joestr.currentplotvisualizer.settings.BossBarVisualizationSetting;
 import com.plotsquared.core.PlotAPI;
+import de.cubbossa.commonsettings.SettingsAPI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -27,6 +29,7 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
   public static CurrentPlotVisualizerPlugin instance;
   private PlotAPI plotApi;
+  private SettingsAPI settingsApi;
   private final Map<UUID, BossBar> playerBossBars = new HashMap<>();
   private NamespacedKey namespacedKey;
 
@@ -46,6 +49,10 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
       this.registerPlotsquaredEventListeners(instance);
     }
 
+    if (settingsApi != null) {
+      this.registerSettings(instance);
+    }
+
     this.registerCommands(
       Pair.of("cpv", new CurrentPlotVisualizerCommand(instance))
     );
@@ -61,6 +68,10 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
     return plotApi;
   }
 
+  public SettingsAPI getSettingsApi() {
+    return settingsApi;
+  }
+
   public Map<UUID, BossBar> getPlayerBossBars() {
     return playerBossBars;
   }
@@ -71,6 +82,7 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
 
   private void loadExternalPluginIntegrations() {
     this.loadPlotSquaredPluginIntegration();
+    this.loadCommonSettingsPluginIntegration();
   }
 
   private void loadPlotSquaredPluginIntegration() {
@@ -79,8 +91,18 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
     }
   }
 
+  private void loadCommonSettingsPluginIntegration() {
+    if (Bukkit.getPluginManager().getPlugin("CommonSettings") != null) {
+      this.settingsApi = SettingsAPI.getInstance();
+    }
+  }
+
   private void registerPlotsquaredEventListeners(CurrentPlotVisualizerPlugin plugin) {
     this.plotApi.registerListener(new PlotChangeListener(plugin));
+  }
+
+  private void registerSettings(CurrentPlotVisualizerPlugin plugin) {
+    this.settingsApi.registerSetting(new BossBarVisualizationSetting(plugin));
   }
 
   private void registerCommands(Pair<String, TabExecutor>... commands) {
