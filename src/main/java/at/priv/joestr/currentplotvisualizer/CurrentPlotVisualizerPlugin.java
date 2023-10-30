@@ -40,7 +40,7 @@ public class CurrentPlotVisualizerPlugin extends JavaPlugin {
     instance = this;
     namespacedKey = new NamespacedKey(
       this,
-      "CurrentPlotVisualizer_cfc3188cb31fe96d5c6ab8b6f1879ecb"
+      "cfc3188cb31fe96d5c6ab8b6f1879ecb"
     );
 
     this.loadExternalPluginIntegrations();
